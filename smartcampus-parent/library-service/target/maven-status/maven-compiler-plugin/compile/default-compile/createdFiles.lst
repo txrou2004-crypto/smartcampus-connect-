@@ -1,0 +1,17 @@
+com\smartcampus\libraryservice\LibraryServiceApplication.class
+com\smartcampus\libraryservice\service\LibraryService.class
+com\smartcampus\libraryservice\client\StudentClient.class
+com\smartcampus\libraryservice\model\Room.class
+com\smartcampus\libraryservice\config\SoapConfig.class
+com\smartcampus\libraryservice\repository\BookRepository.class
+com\smartcampus\libraryservice\repository\RoomRepository.class
+com\smartcampus\libraryservice\soap\LibrarySoapService.class
+com\smartcampus\libraryservice\exception\GlobalExceptionHandler.class
+com\smartcampus\libraryservice\repository\RoomReservationRepository.class
+com\smartcampus\libraryservice\model\RoomReservation.class
+com\smartcampus\libraryservice\model\Book.class
+com\smartcampus\libraryservice\repository\BookReservationRepository.class
+com\smartcampus\libraryservice\config\LockConfig.class
+com\smartcampus\libraryservice\controller\BookController.class
+com\smartcampus\libraryservice\model\BookReservation.class
+com\smartcampus\libraryservice\controller\RoomController.class
