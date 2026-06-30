@@ -1,46 +1,76 @@
 # SmartCampus Connect
 
 ## Project Overview
-SmartCampus Connect is a distributed backend system designed for managing university campus services. It supports student management, course enrolment, notifications, library services, and reporting.
+SmartCampus Connect is a distributed backend platform designed to support essential university operations through a collection of independently deployable services. The system demonstrates the application of distributed systems concepts including Service-Oriented Architecture (SOA), event-driven communication, RESTful services, SOAP integration, concurrency handling, fault tolerance, and database-per-service design.
 
-The system is built using a service-oriented / microservices architecture and demonstrates REST APIs, SOAP web services, multithreading, and asynchronous messaging.
+The platform consists of five core services:
+
+Student Profile Service
+Course Enrolment Service
+Notification Service
+Library & Booking Service
+Reporting & Analytics Service
+
+Each service owns its own database and communicates with other services through REST APIs and asynchronous events. This architecture promotes scalability, maintainability, loose coupling, and fault isolation.
 
 ---
 
 ## System Architecture
-The system follows a distributed multi-tier architecture:
+SmartCampus Connect adopts a Three-Tier Client-Server Architecture combined with distributed service components and choreography-based service composition.
+Presentation Layer (Client applications used by end users):
+Web Portal
+Mobile Application
+Administrative Console
+Postman/API Clients
 
-- Client Layer: Postman / CLI / simple web interface
-- Service Layer: Independent backend services
-- Communication: REST APIs, SOAP services, and asynchronous messaging
+Service Layer (Core backend services):
+Student Profile Service
+Course Enrolment Service
+Notification Service
+Library & Booking Service
+Reporting & Analytics Service
 
-Each service is independently deployable and owns its own database (database-per-service principle).
+Data Layer (Independent databases):
+studentdb
+enrolmentdb
+notificationdb
+librarydb
+analyticsdb
 
 ---
 
 ## Microservices
 
 ### Student Profile Service
-- Provides CRUD operations for student data
-- Exposes REST API endpoints
-- Stores student demographic and academic information
+Manage student information
+Maintain academic records
+Validate student status
+Provide student data to other services
 
 ### Course Enrolment Service
-- Handles course registration, drop/add operations
-- Performs capacity validation
-- Depends on Student Profile Service
+Course registration
+Course withdrawal
+Student validation
+Capacity checking
+Event publishing
 
 ### Notification Service
-- Sends system notifications for enrolment, payment, and library events
-- Consumes messages asynchronously from other services
+Send enrolment notifications
+Send reservation notifications
+Manage notification history
 
 ### Library / Booking Service
-- Manages book loans and room reservations
-- Provides both REST and SOAP (WSDL) interface for legacy integration
+Manage books
+Book reservation
+Room reservation
+Availability checking
+Event publishing
 
 ### Reporting / Analytics Service
-- Aggregates data from multiple services
-- Generates summary reports such as enrolment counts per programme
+Generate reports
+Aggregate statistics
+Track enrolment trends
+Monitor library usage
 
 ---
 
@@ -104,42 +134,6 @@ POST /students
 GET /enrolments
 POST /enrolments
 GET /reports
-
----
-
-## SOAP Web Service
-
-The Library Service exposes SOAP operations via WSDL.
-
-WSDL URL:
-http://localhost:<port>/ws/library?wsdl
-
-A sample SOAP request and response is included in the documentation.
-
-A SOAP Fault scenario is also demonstrated by triggering invalid requests.
-
----
-
-## Asynchronous Messaging
-
-The Notification Service consumes events asynchronously using:
-
-- Java TCP sockets (Producer-Consumer pattern) OR
-- Message broker (RabbitMQ / Kafka / ActiveMQ)
-
-Message format:
-JSON-based event structure containing event type, timestamp, and payload data.
-
----
-
-## Multithreading
-
-At least one service uses a thread pool (ExecutorService) to handle concurrent requests.
-
-Shared mutable state is protected using synchronization mechanisms such as:
-- synchronized blocks
-- ReentrantLock
-- concurrent collections (java.util.concurrent)
 
 ---
 
