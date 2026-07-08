@@ -1,0 +1,33 @@
+{
+  "info": {
+    "_postman_id": "98844247-ffd6-4832-97e6-5cabb8ba6ad2",
+    "name": "Failure handling",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53761028",
+    "_collection_link": "https://go.postman.co/collection/53761028-98844247-ffd6-4832-97e6-5cabb8ba6ad2?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "failure handling",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/books/B003/borrow/S1001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "books",
+            "B003",
+            "borrow",
+            "S1001"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

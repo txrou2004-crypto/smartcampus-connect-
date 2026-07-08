@@ -1,0 +1,468 @@
+{
+  "info": {
+    "_postman_id": "88956a84-9d63-405e-9e62-5033d649b59e",
+    "name": "Library Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53761028",
+    "_collection_link": "https://go.postman.co/collection/53761028-88956a84-9d63-405e-9e62-5033d649b59e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Borrow Book (Inactive Student)",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "text/xml",
+            "disabled": false
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\r\n                  xmlns:lib=\"http://soap.libraryservice.smartcampus.com/\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <lib:checkBookAvailability>\r\n         <arg0>B999</arg0>\r\n      </lib:checkBookAvailability>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/books/B003/borrow/S1001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "books",
+            "B003",
+            "borrow",
+            "S1001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Return Book",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/books/return/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "books",
+            "return",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Reserve Room",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "disabled": false
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"reservationDate\": \"2026-06-29\",\r\n  \"startTime\": \"10:00:00\",\r\n  \"endTime\": \"12:00:00\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/rooms/R002/reserve/S1001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "rooms",
+            "R002",
+            "reserve",
+            "S1001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Modify Reservation",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "disabled": false
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"reservationDate\": \"2026-06-30\",\r\n    \"startTime\": \"14:00:00\",\r\n    \"endTime\": \"16:00:00\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/rooms/reservations/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "rooms",
+            "reservations",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "View Reservation Schedule",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "disabled": false
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"reservationDate\": \"2026-06-30\",\r\n    \"startTime\": \"14:00:00\",\r\n    \"endTime\": \"16:00:00\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/rooms/reservations",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "rooms",
+            "reservations"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cancel Reservation",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"reservationDate\": \"2026-06-27\",\r\n  \"startTime\": \"09:00:00\",\r\n  \"endTime\": \"11:00:00\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/rooms/reservations/1/cancel",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "rooms",
+            "reservations",
+            "1",
+            "cancel"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "SOAP - Check Book Availability",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "text/xml",
+            "disabled": false
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\r\n                  xmlns:lib=\"http://soap.libraryservice.smartcampus.com/\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <lib:checkBookAvailability>\r\n         <arg0>B001</arg0>\r\n      </lib:checkBookAvailability>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8084/ws/library",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8084",
+          "path": [
+            "ws",
+            "library"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Rooms",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "disabled": false
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"bookId\": \"B011\",\r\n  \"title\": \"Machine Learning Basics\",\r\n  \"author\": \"Tom Mitchell\",\r\n  \"isbn\": \"978011\",\r\n  \"availabilityStatus\": \"AVAILABLE\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/books",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Renew Book",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "disabled": false
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"bookId\": \"B011\",\r\n  \"title\": \"Machine Learning Basics\",\r\n  \"author\": \"Tom Mitchell\",\r\n  \"isbn\": \"978011\",\r\n  \"availabilityStatus\": \"AVAILABLE\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/books/renew/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "books",
+            "renew",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Books",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "disabled": false
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"bookId\": \"B011\",\r\n  \"title\": \"Machine Learning Basics\",\r\n  \"author\": \"Tom Mitchell\",\r\n  \"isbn\": \"978011\",\r\n  \"availabilityStatus\": \"AVAILABLE\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/books",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Book By ID",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "disabled": false
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"bookId\": \"B011\",\r\n  \"title\": \"Machine Learning Basics\",\r\n  \"author\": \"Tom Mitchell\",\r\n  \"isbn\": \"978011\",\r\n  \"availabilityStatus\": \"AVAILABLE\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "GET http://localhost:8083/books",
+          "protocol": "GET http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Borrow Book (Active Student)",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "text/xml",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"bookId\": \"B011\",\r\n  \"title\": \"Machine Learning Basics\",\r\n  \"author\": \"Tom Mitchell\",\r\n  \"isbn\": \"978011\",\r\n  \"availabilityStatus\": \"AVAILABLE\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/books/B002/availability",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "books",
+            "B002",
+            "availability"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
