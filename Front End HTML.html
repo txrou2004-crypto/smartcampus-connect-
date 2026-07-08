@@ -1,0 +1,616 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SmartCampus Connect Dashboard</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    display:flex;
+}
+
+.sidebar{
+    width:260px;
+    height:100vh;
+    background:#1e293b;
+    color:white;
+    position:fixed;
+    overflow-y:auto;
+    padding:20px;
+}
+
+.sidebar h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.sidebar h3{
+    margin-top:20px;
+    margin-bottom:10px;
+    color:#cbd5e1;
+}
+
+.sidebar button{
+    width:100%;
+    padding:10px;
+    margin-bottom:8px;
+    border:none;
+    border-radius:6px;
+    background:#334155;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.sidebar button:hover{
+    background:#475569;
+}
+
+.main{
+    margin-left:260px;
+    width:100%;
+    padding:30px;
+}
+
+.header{
+    margin-bottom:20px;
+}
+
+.header h1{
+    color:#0f172a;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.student{
+    border-left:5px solid #3b82f6;
+}
+
+.course{
+    border-left:5px solid #22c55e;
+}
+
+.notification{
+    border-left:5px solid #f59e0b;
+}
+
+.library{
+    border-left:5px solid #8b5cf6;
+}
+
+.analytics{
+    border-left:5px solid #ef4444;
+}
+
+.action-panel{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.action-panel h3{
+    margin-bottom:15px;
+}
+
+input{
+    padding:10px;
+    margin-right:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    margin-bottom:10px;
+}
+
+button.action{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button.action:hover{
+    background:#1d4ed8;
+}
+
+.response{
+    background:#0f172a;
+    color:#22c55e;
+    padding:20px;
+    border-radius:12px;
+    min-height:300px;
+    white-space:pre-wrap;
+    overflow:auto;
+    font-family:Consolas;
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>SmartCampus</h2>
+
+    <h3>Student Service</h3>
+    <button onclick="getStudents()">Students</button>
+
+    <h3>Course Service</h3>
+    <button onclick="getCourses()">Courses</button>
+
+    <h3>Notification Service</h3>
+    <button onclick="getNotifications()">Notifications</button>
+
+    <h3>Library Service</h3>
+    <button onclick="getBooks()">Books</button>
+    <button onclick="getBookReservations()">Book Reservations</button>
+    <button onclick="getRooms()">Discussion Rooms</button>
+    <button onclick="getRoomReservations()">Room Reservations</button>
+
+    <h3>Analytics Service</h3>
+    <button onclick="getReports()">Reports</button>
+    <button onclick="getStatistics()">Statistics</button>
+
+</div>
+
+<div class="main">
+
+    <div class="header">
+        <h1>SmartCampus Connect Dashboard</h1>
+        <p>Distributed Systems Project Demonstration</p>
+    </div>
+
+    <div id="live-alerts" style="background:#fef3c7; color:#92400e; padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid #fcd34d;">
+        Waiting for live updates...
+    </div>
+
+    <div class="cards">
+
+        <div class="card student">
+            <h3>Student Profile Service</h3>
+            <p>Student and Academic Record Management</p>
+        </div>
+
+        <div class="card course">
+            <h3>Course Enrolment Service</h3>
+            <p>Course Registration and Validation</p>
+        </div>
+
+        <div class="card notification">
+            <h3>Notification Service</h3>
+            <p>Email, SMS and Push Notifications</p>
+        </div>
+
+        <div class="card library">
+            <h3>Library & Booking Service</h3>
+            <p>Books and Discussion Room Reservations</p>
+        </div>
+
+        <div class="card analytics">
+            <h3>Reporting & Analytics Service</h3>
+            <p>Reports and Service Statistics</p>
+        </div>
+
+    </div>
+
+    <div class="action-panel">
+
+        <h3>Course Enrolment</h3>
+
+        <input
+            type="text"
+            id="analyticsStudentId"
+            placeholder="Enter Student ID">
+
+        <input
+            type="text"
+            id="courseId"
+            placeholder="Course ID">
+
+        <button class="action"
+                onclick="enrollStudent()">
+            Enrol Student
+        </button>
+
+    </div>
+
+    <div class="action-panel">
+
+        <h3>Book Reservation</h3>
+
+        <input
+            type="text"
+            id="bookId"
+            placeholder="Book ID">
+
+        <input
+            type="text"
+            id="bookStudentId"
+            placeholder="Student ID">
+
+        <button class="action"
+                onclick="reserveBook()">
+            Reserve Book
+        </button>
+
+    </div>
+
+    <div class="action-panel">
+
+        <h3>Discussion Room Reservation</h3>
+
+        <input
+            type="text"
+            id="roomId"
+            placeholder="Room ID">
+
+        <input
+            type="text"
+            id="roomStudentId"
+            placeholder="Student ID">
+
+        <button class="action"
+                onclick="reserveRoom()">
+            Reserve Room
+        </button>
+
+    </div>
+
+ <div class="action-panel" style="margin-bottom: 25px;">
+        <h3 style="color: #0f172a; margin-bottom: 5px;">📊 Analytics Operational Dashboard</h3>
+        <p style="margin-bottom: 20px; color: #64748b; font-size: 14px;">Live Telemetry from Service Monitoring</p>
+        
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-between;">
+            <div style="flex: 1; min-width: 200px; text-align: center; background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <h4 style="font-size: 14px; color: #475569; margin-bottom: 10px;">Graduation Progress</h4>
+                <div style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 110px; height: 110px;">
+                    <canvas id="progressRingCanvas" width="110" height="110"></canvas>
+                    <span id="progressText" style="position: absolute; font-size: 18px; font-weight: bold; color: #1e293b;">0%</span>
+                </div>
+            </div>
+
+            <div style="flex: 1; min-width: 280px; background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <h4 style="font-size: 14px; color: #475569; margin-bottom: 10px;">Library Flow Patterns</h4>
+                <div style="height: 110px;"><canvas id="libraryChart"></canvas></div>
+                <div style="font-size: 11px; text-align: center; color: #4f46e5; margin-top: 8px; font-weight: 500;">
+                    💡 Recommended Quiet Time: <span id="quietTimeText">Loading...</span>
+                </div>
+            </div>
+
+            <div style="flex: 1; min-width: 280px; background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <h4 style="font-size: 14px; color: #475569; margin-bottom: 10px;">Notification Channel Ratio</h4>
+                <div style="height: 110px;"><canvas id="communicationChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background-color: #ffffff; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; gap: 10px; align-items: center;">
+    <label for="studentId" style="font-weight: bold; font-family: sans-serif; color: #374151;">Enter Student ID:</label>
+    <input type="text" id="studentId" placeholder="e.g. S12345" value="S12345" 
+           style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 14px; width: 150px;">
+    <button onclick="getReports()">Generate Report</button>
+</div>
+
+    <div class="response" id="result">
+Waiting for API response...
+    </div>
+
+<script>
+const result = document.getElementById("result");
+
+function show(data){
+    result.textContent = JSON.stringify(data, null, 2);
+}
+
+/* Student Service */
+async function getStudents(){
+    const res = await fetch("http://localhost:8080/students");
+    show(await res.json());
+}
+
+/* Course Service */
+async function getCourses(){
+    const res = await fetch("http://localhost:8081/enrollments/courses");
+    show(await res.json());
+}
+
+async function enrollStudent(){
+    const studentId = document.getElementById("studentId").value.trim() || "S1001";
+    const courseId = document.getElementById("courseId").value;
+
+    const res = await fetch("http://localhost:8081/enrollments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ student_id: studentId, course_id: courseId })
+    });
+    show(await res.json());
+}
+
+/* Notification Service */
+async function getNotifications(){
+    try {
+        const res = await fetch("http://localhost:8082/notifications/all");
+        if (res.status === 204) {
+            show({ message: "No notifications found in the database." });
+            return;
+        }
+        show(await res.json());
+    } catch (error) {
+        show({ error: "Failed to connect to Notification Service on port 8082." });
+    }
+}
+
+/* Library Service */
+async function getBooks(){
+    const res = await fetch("http://localhost:8083/books");
+    show(await res.json());
+}
+
+async function getBookReservations(){
+    const studentId = document.getElementById("bookStudentId").value || "S1001";
+    const res = await fetch(`http://localhost:8083/books/student/${studentId}/reservations`);
+    show(await res.json());
+}
+
+async function getRooms(){
+    const res = await fetch("http://localhost:8083/rooms");
+    show(await res.json());
+}
+
+async function getRoomReservations(){
+    const res = await fetch("http://localhost:8083/rooms/reservations");
+    show(await res.json());
+}
+
+async function reserveBook(){
+    const bookId = document.getElementById("bookId").value;
+    const studentId = document.getElementById("bookStudentId").value;
+
+    const res = await fetch(`http://localhost:8083/books/${bookId}/borrow/${studentId}`, { method: "POST" });
+    show(await res.json());
+}
+
+async function reserveRoom(){
+    const roomId = document.getElementById("roomId").value;
+    const studentId = document.getElementById("roomStudentId").value;
+
+    const res = await fetch(`http://localhost:8083/rooms/${roomId}/reserve/${studentId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            reservationDate: "2026-06-30",
+            startTime: "10:00:00",
+            endTime: "12:00:00"
+        })
+    });
+    show(await res.json());
+}
+
+/* Analytics Service Integration */
+let chartInstances = {};
+
+async function getReports() {
+    console.log("getReports started");
+
+    const studentId = document.getElementById("studentId").value.trim() || "S1001";
+
+    try {
+
+        console.log("Calling API for:", studentId);
+
+        const progressRes = await fetch(
+            `http://localhost:8085/api/analytics/academic/progress/${studentId}`
+        );
+
+        if (!progressRes.ok) {
+            throw new Error("Failed to fetch Graduation Progress");
+        }
+
+        const progressData = await progressRes.json();
+        console.log("Progress:", progressData);
+
+        const progressVal = Number(progressData.progressPercentage) || 0;
+
+        document.getElementById("progressText").textContent = progressVal + "%";
+        renderProgressRing(progressVal);
+
+
+        // Library
+        const libraryRes = await fetch(
+            "http://localhost:8085/api/analytics/library/trends"
+        );
+
+        if (!libraryRes.ok) {
+            throw new Error("Failed to fetch Library Trends");
+        }
+
+        const libraryData = await libraryRes.json();
+        console.log("Library:", libraryData);
+
+        document.getElementById("quietTimeText").textContent =
+            libraryData.recommendedQuietTime || "N/A";
+
+        renderLibraryChart(libraryData.flowTrends || {});
+
+
+        // Communication
+        const commsRes = await fetch(
+            `http://localhost:8085/api/analytics/communication/ratio/${studentId}`
+        );
+
+        if (!commsRes.ok) {
+            throw new Error("Failed to fetch Communication Ratio");
+        }
+
+        const commsData = await commsRes.json();
+        console.log("Communication:", commsData);
+
+        renderCommunicationChart(commsData.channelDistribution || {});
+
+
+        show({
+            academic: progressData,
+            library: libraryData,
+            communication: commsData
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        show({
+            status: "ERROR",
+            message: err.message
+        });
+
+    }
+}
+
+async function getStatistics() {
+    try {
+        const res = await fetch('http://localhost:8085/api/analytics/academic/scarcity');
+        const data = await res.json();
+        show(data);
+    } catch (error) {
+        show({ error: "Failed to fetch Scarcity metrics from Analytics Service on port 8085." });
+    }
+}
+
+// Helper: Renders the Circular Progress Ring
+function renderProgressRing(percent) {
+    const canvas = document.getElementById('progressRingCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (chartInstances['ring']) chartInstances['ring'].destroy();
+    
+    chartInstances['ring'] = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [percent, 100 - percent],
+                backgroundColor: ['#3b82f6', '#e2e8f0'],
+                borderWidth: 0
+            }]
+        },
+        options: { cutout: '80%', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { enabled: false } } }
+    });
+}
+
+function renderLibraryChart(trends) {
+    const canvas = document.getElementById('libraryChart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (chartInstances['lib']) chartInstances['lib'].destroy();
+
+    const labels = Object.keys(trends).length > 0 ? Object.keys(trends) : ['No Data'];
+    const dataValues = Object.values(trends).length > 0 ? Object.values(trends) : [0];
+
+    chartInstances['lib'] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels, 
+            datasets: [{
+                data: dataValues,
+                backgroundColor: '#8b5cf6',
+                borderRadius: 4
+            }]
+        },
+        options: { 
+            responsive: true, 
+            maintainAspectRatio: false, 
+            plugins: { legend: { display: false } }, 
+            scales: { y: { beginAtZero: true }, x: { ticks: { font: { size: 10 } } } } 
+        }
+    });
+}
+
+// Helper: Renders the Horizontal Channel Ratio Blocks
+function renderCommunicationChart(dist) {
+    const canvas = document.getElementById('communicationChart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (chartInstances['comm']) chartInstances['comm'].destroy();
+
+    // Check lowercase first to match your exact backend response payload
+    const emailVal = dist['email'] !== undefined ? dist['email'] : (dist['EMAIL'] || 0);
+    const smsVal = dist['sms'] !== undefined ? dist['sms'] : (dist['SMS'] || 0);
+    const pushVal = dist['push'] !== undefined ? dist['push'] : (dist['PUSH'] || 0);
+
+    chartInstances['comm'] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['EMAIL', 'SMS', 'PUSH'],
+            datasets: [{
+                data: [emailVal, smsVal, pushVal],
+                backgroundColor: ['#f59e0b', '#3b82f6', '#10b981'],
+                borderRadius: 4
+            }]
+        },
+        options: { 
+            indexAxis: 'y', 
+            responsive: true, 
+            maintainAspectRatio: false, 
+            plugins: { legend: { display: false } }, 
+            scales: { x: { beginAtZero: true }, y: { ticks: { font: { size: 9 } } } } 
+        }
+    });
+}
+
+let lastNotificationId = null;
+
+setInterval(function() {
+    fetch("http://localhost:8082/notifications/all")
+        .then(res => { if(res.ok) return res.json(); throw new Error(); })
+        .then(data => {
+            if (data && data.length > 0) {
+                const latest = data[data.length - 1];
+                
+                const alertsDiv = document.getElementById("live-alerts");
+                if (alertsDiv) {
+                    alertsDiv.innerHTML = `
+                        <strong>New Alert:</strong> ${latest.message || 'No Message'} <br>
+                        <small>Student: ${latest.student_id || 'N/A'} | Type: ${latest.notification_type || 'N/A'} | Status: ${latest.status || 'N/A'}</small>
+                    `;
+                }
+                
+                if (latest.notification_id !== lastNotificationId) {
+                    lastNotificationId = latest.notification_id;
+                }
+            }
+        }).catch(err => {});
+}, 5000);
+</script>
+
+</body>
+</html>
+```
+
