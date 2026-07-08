@@ -3,6 +3,8 @@
 
 SmartCampus Connect is a distributed backend platform designed to support essential university operations through a collection of independently deployable services. The system demonstrates the application of distributed systems concepts including Service-Oriented Architecture (SOA), event-driven communication, RESTful services, SOAP integration, concurrency handling, fault tolerance, and database-per-service design.
 
+Below is the link to the demonstration video: https://www.youtube.com/watch?v=lxR3VgNozos
+
 The platform consists of five core services:
 Student Profile Service
 Course Enrolment Service
@@ -357,9 +359,9 @@ Published Events:
 
 ## **Team Members and Roles**
 
-Team Lead:  LING JIA XUAN
-Architect:  TAN XIN ROU
-Backend Engineer:   HEMA MALINI A/P R.SUNDARESWARAN & NOR NADHIRAH BINTI MAZELAN
-Concurrency / Messaging Engineer:  ALIEF ADAM BIN ARMIZAL AZDWAN
+- Team Lead:  LING JIA XUAN
+- Architect:  TAN XIN ROU
+- Backend Engineer:   HEMA MALINI A/P R.SUNDARESWARAN & NOR NADHIRAH BINTI MAZELAN
+- Concurrency / Messaging Engineer:  ALIEF ADAM BIN ARMIZAL AZDWAN
 
 ---
