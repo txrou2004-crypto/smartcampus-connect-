@@ -1,0 +1,112 @@
+{
+  "info": {
+    "_postman_id": "d638bb2b-8963-4871-9214-e49b6aaa887e",
+    "name": "Notification Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53694770",
+    "_collection_link": "https://go.postman.co/collection/53694770-d638bb2b-8963-4871-9214-e49b6aaa887e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Student Enrolled",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"student_id\": \"S901\",\r\n  \"course_id\": \"CSC101\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/enrollments",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "enrollments"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Book Reserved",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/books/B010/borrow/S1001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "books",
+            "B010",
+            "borrow",
+            "S1001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Room Booked",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"reservationDate\": \"2026-07-03\",\r\n  \"startTime\": \"10:00:00\",\r\n  \"endTime\": \"12:00:00\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/rooms/R001/reserve/S1001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "rooms",
+            "R001",
+            "reserve",
+            "S1001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Fetch All Notification",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/notifications/all",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "notifications",
+            "all"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
