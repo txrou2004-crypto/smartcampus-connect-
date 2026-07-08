@@ -11,55 +11,42 @@ Library & Booking Service
 Reporting & Analytics Service
 Each service owns its own database and communicates with other services through REST APIs and asynchronous events. This architecture promotes scalability, maintainability, loose coupling, and fault isolation.
 
-## **Architecture**
-SmartCampus Connect adopts a Three-Tier Client-Server Architecture combined with distributed service components and choreography-based service composition.
+---
+
+# Architecture
+
+SmartCampus Connect adopts a **Three-Tier Client-Server Architecture** combined with **distributed service components** and **choreography-based service composition**.
 
 ## Architecture Layers
-Presentation Layer
+
+### Presentation Layer
+
 Client applications used by end users:
-Web Portal
-Mobile Application
-Administrative Console
-Postman/API Clients
 
-## Service Layer
+- Web Portal
+- Mobile Application
+- Administrative Console
+- Postman / API Clients
+
+### Service Layer
+
 Core backend services:
-Student Profile Service
-Course Enrolment Service
-Notification Service
-Library & Booking Service
-Reporting & Analytics Service
 
-## Data Layer
+- Student Profile Service
+- Course Enrolment Service
+- Notification Service
+- Library & Booking Service
+- Reporting & Analytics Service
+
+### Data Layer
+
 Independent databases:
-studentdb
-enrolmentdb
-notificationdb
-librarydb
-analyticsdb
 
----
-### Student Profile Service
-- Provides CRUD operations for student data
-- Exposes REST API endpoints
-- Stores student demographic and academic information
-
-### Course Enrolment Service
-- Handles course registration, drop/add operations
-- Performs capacity validation
-- Depends on Student Profile Service
-
-### Notification Service
-- Sends system notifications for enrolment, payment, and library events
-- Consumes messages asynchronously from other services
-
-### Library / Booking Service
-- Manages book loans and room reservations
-- Provides both REST and SOAP (WSDL) interface for legacy integration
-
-### Reporting / Analytics Service
-- Aggregates data from multiple services
-- Generates summary reports such as enrolment counts per programme
+- studentdb
+- enrolmentdb
+- notificationdb
+- librarydb
+- analyticsdb
 
 ---
 
