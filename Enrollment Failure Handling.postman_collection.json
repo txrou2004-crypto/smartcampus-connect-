@@ -1,0 +1,106 @@
+{
+  "info": {
+    "_postman_id": "997e6ac4-c359-4f11-8d10-49ac4746bbd9",
+    "name": "Enrollment Failure Handling",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53694685",
+    "_collection_link": "https://go.postman.co/collection/53694685-997e6ac4-c359-4f11-8d10-49ac4746bbd9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Timeout and Retry",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "// Map iterations to your 10 valid student rows\r",
+              "const baseId = 1001 + (pm.info.iteration % 10); \r",
+              "const standardStudentId = \"S\" + baseId;\r",
+              "\r",
+              "pm.variables.set(\"dynamicStudentId\", standardStudentId);\r",
+              "console.log(`[🛫 System Initialized] Preparing request for Student: ${standardStudentId}`);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// 1. Initialize retry tracking variables\r",
+              "if (!pm.variables.get(\"retryCount\")) {\r",
+              "    pm.variables.set(\"retryCount\", 0);\r",
+              "}\r",
+              "\r",
+              "let currentRetry = parseInt(pm.variables.get(\"retryCount\"));\r",
+              "const maxRetries = 3; // Match your 3-attempt requirement\r",
+              "\r",
+              "// 2. Simulate Failure Handling Path\r",
+              "// If the server returns an error (400) because it's \"locked\" by a duplicate entry\r",
+              "if (pm.response.code === 400) {\r",
+              "    if (currentRetry < maxRetries) {\r",
+              "        currentRetry++;\r",
+              "        pm.variables.set(\"retryCount\", currentRetry);\r",
+              "        \r",
+              "        // Log the programmatic retry attempt just like your Java backend would\r",
+              "        console.warn(`[⏳ LOCK CONGESTION] Student ${pm.variables.get(\"dynamicStudentId\")} blocked by lock. Retrying attempt #${currentRetry}/${maxRetries}...`);\r",
+              "        \r",
+              "        // Force a 1.5-second timeout delay before trying again\r",
+              "        setTimeout(function(){}, 1500);\r",
+              "        postman.setNextRequest(pm.info.requestName);\r",
+              "    } else {\r",
+              "        // 3. Trigger Failure State: Retries exhausted (Total timeout ~4.5 - 5 seconds)\r",
+              "        console.error(`❌ [FAILURE HANDLING TRIGGERED] TimeoutException: Exceeded maximum lock acquisition timeout of 5000ms for course CSC111.`);\r",
+              "        \r",
+              "        // Fail the test explicitly in Postman so it shows up red in your report\r",
+              "        pm.test(\"Status code is 201 (Failure Handling: Timeout Route Taken)\", function () {\r",
+              "            pm.expect(pm.response.code).to.equal(201, \"Thread timed out waiting for course lock!\");\r",
+              "        });\r",
+              "        \r",
+              "        pm.variables.set(\"retryCount\", 0); // Reset for the next student run\r",
+              "    }\r",
+              "} else {\r",
+              "    // Clean registration execution path\r",
+              "    pm.test(\"Registration Processed Successfully\", function () {\r",
+              "        pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+              "    });\r",
+              "    pm.variables.set(\"retryCount\", 0); // Reset on success\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"student_id\": \"{{dynamicStudentId}}\",\r\n    \"course_id\": \"CSC110\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/enrollments",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "enrollments"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

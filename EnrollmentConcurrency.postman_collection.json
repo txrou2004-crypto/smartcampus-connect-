@@ -1,0 +1,57 @@
+{
+  "info": {
+    "_postman_id": "77076fdf-eb01-47ee-af88-1eab82a59e56",
+    "name": "EnrollmentConcurrency",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53694685",
+    "_collection_link": "https://go.postman.co/collection/53694685-77076fdf-eb01-47ee-af88-1eab82a59e56?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Concurrency Test",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "// Maps iterations cleanly to your exact 10 valid student rows\r",
+              "const baseId = 1001 + (pm.info.iteration % 10); \r",
+              "const standardStudentId = \"S\" + baseId;\r",
+              "\r",
+              "pm.variables.set(\"dynamicStudentId\", standardStudentId);\r",
+              "console.log(`[🏃 Iteration #${pm.info.iteration + 1}] Target Student: ${standardStudentId}`);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"student_id\": \"{{dynamicStudentId}}\",\r\n    \"course_id\": \"CSC111\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/enrollments",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "enrollments"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
