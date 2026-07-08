@@ -1,0 +1,340 @@
+{
+  "info": {
+    "_postman_id": "60f079c6-8b69-4c1d-bbc5-04a18df020cb",
+    "name": "Student Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53694685",
+    "_collection_link": "https://go.postman.co/collection/53694685-60f079c6-8b69-4c1d-bbc5-04a18df020cb?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Create Student Profile",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"student_id\": \"S1011\",\r\n  \"first_name\": \"Aiden\",\r\n  \"last_name\": \"Lim\",\r\n  \"email\": \"aiden.lim@student.edu\",\r\n  \"tel_number\": \"0123456791\",\r\n  \"programme_code\": \"CS110\",\r\n  \"status\": \"ACTIVE\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/students",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "students"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get ALL Student Profile",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var template = `",
+              "<style>",
+              "  body { font-family: Arial, sans-serif; padding: 10px; }",
+              "  h2 { color: #333; }",
+              "  table { border-collapse: collapse; width: 100%; }",
+              "  th { background-color: #FF6C37; color: white; padding: 8px 12px; text-align: left; }",
+              "  td { padding: 8px 12px; border-bottom: 1px solid #ddd; }",
+              "  tr:hover { background-color: #f5f5f5; }",
+              "  .badge { padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; }",
+              "  .active { background-color: #d4edda; color: #155724; }",
+              "  .inactive { background-color: #f8d7da; color: #721c24; }",
+              "</style>",
+              "<h2>Student List</h2>",
+              "<table>",
+              "  <thead>",
+              "    <tr>",
+              "      <th>Student ID</th>",
+              "      <th>Name</th>",
+              "      <th>Email</th>",
+              "      <th>Programme</th>",
+              "      <th>Status</th>",
+              "      <th>Latest GPA</th>",
+              "      <th>Latest CGPA</th>",
+              "    </tr>",
+              "  </thead>",
+              "  <tbody>",
+              "    {{#each students}}",
+              "    <tr>",
+              "      <td>{{student_id}}</td>",
+              "      <td>{{first_name}} {{last_name}}</td>",
+              "      <td>{{email}}</td>",
+              "      <td>{{programme_code}}</td>",
+              "      <td><span class=\"badge {{statusClass}}\">{{status}}</span></td>",
+              "      <td>{{latestGPA}}</td>",
+              "      <td>{{latestCGPA}}</td>",
+              "    </tr>",
+              "    {{/each}}",
+              "  </tbody>",
+              "</table>",
+              "`;",
+              "",
+              "var responseData = pm.response.json();",
+              "",
+              "var students = responseData.map(function(s) {",
+              "    var records = s.academic_records || [];",
+              "    var latest = records.length > 0 ? records[records.length - 1] : null;",
+              "    return {",
+              "        student_id: s.student_id,",
+              "        first_name: s.first_name,",
+              "        last_name: s.last_name,",
+              "        email: s.email,",
+              "        programme_code: s.programme_code,",
+              "        status: s.status,",
+              "        statusClass: s.status === 'ACTIVE' ? 'active' : 'inactive',",
+              "        latestGPA: latest ? latest.gpa : 'N/A',",
+              "        latestCGPA: latest ? latest.cgpa : 'N/A'",
+              "    };",
+              "});",
+              "",
+              "pm.visualizer.set(template, { students: students });"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/students",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "students"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get One Student Profile",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/students/S1001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "students",
+            "S1001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Student Profile",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/students/S1011",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "students",
+            "S1011"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Academic Record of the Deleted Student Profile",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/students/S1011/records/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "students",
+            "S1011",
+            "records",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Student Profile",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"student_id\": \"S1002\",\r\n  \"first_name\": \"Sarah\",\r\n  \"last_name\": \"Lee\",\r\n  \"email\": \"sarah.lee.new@student.edu\",\r\n  \"tel_number\": \"0123456700\",\r\n  \"programme_code\": \"SE220\",\r\n  \"status\": \"INACTIVE\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/students/S1002",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "students",
+            "S1002"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Academic Record",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"academic_year\": \"2025/2026\",\r\n  \"semester\": 1,\r\n  \"gpa\": 3.70,\r\n  \"cgpa\": 3.65,\r\n  \"credits_earned\": 18\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/students/S1001/records",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "students",
+            "S1001",
+            "records"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Read Academic Record",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/students/S1001/records/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "students",
+            "S1001",
+            "records",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Academic Record",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"academic_year\": \"2024/2025\",\r\n  \"semester\": 1,\r\n  \"gpa\": 3.55,\r\n  \"cgpa\": 3.55,\r\n  \"credits_earned\": 18\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/students/S1001/records/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "students",
+            "S1001",
+            "records",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Student Profile with Duplicate Email",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Create Student Profile with Invalid Field Values",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"student_id\": \"S1099\",\r\n  \"first_name\": \"\",\r\n  \"last_name\": \"Dup\",\r\n  \"email\": \"not-an-email\",\r\n  \"tel_number\": \"0100000000\",\r\n  \"programme_code\": \"\",\r\n  \"status\": \"ACTIVE\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/students",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "students"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
